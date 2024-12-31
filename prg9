@@ -1,0 +1,6 @@
+L = 24; W = 12; H = 4; rho = 0.101; weight = 15;
+
+x = (weight / rho) / (L*W + 2*H*W + 2*L*H);
+
+disp('Wall thickness (x) in inches:');
+disp(x);
