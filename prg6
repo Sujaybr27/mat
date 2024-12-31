@@ -1,0 +1,27 @@
+
+year(1) = 0;                
+M(1) = 0;                  
+AB(1) = 300000;             
+Wnext = 25000;              
+rate = 0.05;                
+inf = 0.02;                
+
+ABnext = AB(1) * (1 + rate);
+
+n = 2;                     
+while ABnext > Wnext       
+   year(n) = n - 1;        
+   W(n) = Wnext;           
+   AB(n) = ABnext - W(n);  
+   ABnext = AB(n) * (1 + rate);
+   Wnext = W(n) * (1 + inf);    
+   n = n + 1;              
+end
+
+fprintf('The money will last for %d years.\n', year(n-1));
+
+bar(year, [AB; W]', 2.0);
+legend('Account Balance', 'Withdrawal');
+xlabel('Year');
+ylabel('Amount');
+title('Account Balance vs Withdrawals Over Time');
