@@ -1,28 +1,22 @@
-function [maxHeight, maxDistance] = projectileTrajectory(initialVelocity, angle)
-   g = 9.81;
-   theta = deg2rad(angle);
-   vX = initialVelocity * cos(theta);
-   vY = initialVelocity * sin(theta);
-   tMaxHeight = vY / g;
-   maxHeight = (vY^2) / (2 * g);
-   totalTime = 2 * tMaxHeight;
-   maxDistance = vX * totalTime;
-   t = linspace(0, totalTime, 100);
-   x = vX * t;
-   y = vY * t - 0.5 * g * t.^2;
-   figure;
-   plot(x, y, 'b-', 'LineWidth', 1.5);
-   xlabel('Horizontal Distance (m)');
-   ylabel('Vertical Distance (m)');
-   title('Projectile Trajectory');
-   grid on;
-   axis equal;
-   text(maxDistance / 2, maxHeight, sprintf('Max Height: %.2f m', maxHeight), 'HorizontalAlignment', 'center');
-   text(maxDistance, 0, sprintf('Max Distance: %.2f m', maxDistance), 'HorizontalAlignment', 'right');
+function [h_max, d_max] = projectile_trajectory(v0, theta)
+    g = 9.81;
+    theta_rad = deg2rad(theta);
+    h_max = (v0^2 * sin(theta_rad)^2) / (2 * g);
+    d_max = (v0^2 * sin(2 * theta_rad)) / g;
+    t_flight = (2 * v0 * sin(theta_rad)) / g;
+    t = linspace(0, t_flight, 100);
+    x = v0 * cos(theta_rad) * t;
+    y = v0 * sin(theta_rad) * t - 0.5 * g * t.^2;
+    figure;
+    plot(x, y, 'b', 'LineWidth', 2);
+    xlabel('Horizontal Distance (m)');
+    ylabel('Vertical Distance (m)');
+    title('Projectile Trajectory');
+    grid on;
 end
 
-velocity = 230;
-launchAngle = 39;
-[maxHeight, maxDistance] = projectileTrajectory(velocity, launchAngle);
-fprintf('Maximum Height: %.2f m\n', maxHeight);
-fprintf('Maximum Distance: %.2f m\n', maxDistance);
+v0 = 230;
+theta = 39;
+[h_max, d_max] = projectile_trajectory(v0, theta);
+disp(['Maximum Height: ', num2str(h_max), ' m']);
+disp(['Maximum Distance: ', num2str(d_max), ' m']);
