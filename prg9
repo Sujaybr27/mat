@@ -4,3 +4,20 @@ x = (weight / rho) / (L*W + 2*H*W + 2*L*H);
 
 disp('Wall thickness (x) in inches:');
 disp(x);
+
+
+
+
+%or
+outerLength = 24;
+outerWidth = 12;
+outerHeight = 4;
+specificWeight = 0.101;
+targetWeight = 15;
+weightFunction = @(x) specificWeight * ( ...
+   (outerLength * outerWidth) - ...
+   ((outerLength - 2*x) * (outerWidth - 2*x)) + ...
+   2 * ((outerHeight - x) * outerWidth * x) + ...
+   2 * ((outerHeight - x) * outerLength * x));
+xThickness = fzero(@(x) weightFunction(x) - targetWeight, [0, min([outerLength, outerWidth, outerHeight]) / 2]);
+fprintf('The wall thickness x for a box weighing %.2f lb is %.4f inches.\n', targetWeight, xThickness);
