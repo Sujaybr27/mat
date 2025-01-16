@@ -1,0 +1,18 @@
+v0 = 250;            
+theta = 65;          
+g = 9.81;            
+v_wind = 30;         
+t_flight = 2 * v0 * sind(theta) / g; % Time of flight without wind
+t = linspace(0, t_flight, 1000);
+x_no_wind = v0 * cosd(theta) .* t;
+y_no_wind = v0 * sind(theta) .* t - 0.5 * g * t.^2;
+x_with_wind = x_no_wind - v_wind .* t;
+y_with_wind = y_no_wind;
+figure;
+plot(x_no_wind, y_no_wind, 'b-', 'LineWidth', 1.5); hold on;
+plot(x_with_wind, y_with_wind, 'r--', 'LineWidth', 1.5);
+xlabel('Horizontal Distance (m)');
+ylabel('Vertical Distance (m)');
+legend('Without Wind', 'With Wind');
+title('Projectile Trajectory');
+grid on;
